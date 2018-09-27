@@ -1,10 +1,9 @@
 package com.tw.relife;
 
+import com.tw.relife.exception.SampleNotFoundException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RelifeAppTest {
     @Test
@@ -36,5 +35,15 @@ class RelifeAppTest {
         RelifeResponse response = app.process(whateverRequest);
 
         assertEquals(500, response.getStatus());
+    }
+
+    @Test
+    void should_get_response_with_exact_status_code() {
+        RelifeApp app = new RelifeApp(request -> {
+            throw new SampleNotFoundException();
+        });
+        RelifeRequest whateverRequest = new RelifeRequest("/any/path", RelifeMethod.GET);
+        RelifeResponse response = app.process(whateverRequest);
+        assertEquals(404, response.getStatus());
     }
 }
