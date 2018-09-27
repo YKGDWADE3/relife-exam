@@ -1,6 +1,7 @@
 package com.tw.relife;
 
 import com.tw.relife.annonation.RelifeStatusCode;
+import com.tw.relife.util.RelifeResponseUtil;
 
 public class RelifeApp implements RelifeAppHandler {
     public static final Class<RelifeStatusCode> STATUS_CODE_CLASS = RelifeStatusCode.class;
@@ -20,9 +21,7 @@ public class RelifeApp implements RelifeAppHandler {
         try {
             response = handler.process(request);
         }catch (RuntimeException ex){
-            RelifeStatusCode declaredAnnotation = ex.getClass().getDeclaredAnnotation(STATUS_CODE_CLASS);
-            response = declaredAnnotation == null ? new RelifeResponse(500) : new RelifeResponse(declaredAnnotation.value());
-            return response;
+            return RelifeResponseUtil.getResponseFromException(ex);
         }
         return response;
 
