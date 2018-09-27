@@ -19,7 +19,7 @@ public class RelifeAppHandlerImpl implements RelifeAppHandler{
 
 
     private final Map<RelifeAction, RelifeAppHandler> relifeActions = new HashMap<>();
-    private final List<Class<?>> controllerClasses = new ArrayList<>();
+    private final Set<Class<?>> controllerClasses = new HashSet<>();
 
     public RelifeResponse process(RelifeRequest request) {
         RelifeAction requestAction = new RelifeAction(request.getPath(), request.getMethod());
@@ -39,6 +39,9 @@ public class RelifeAppHandlerImpl implements RelifeAppHandler{
     public void addController(Class<?> controllerClass) {
         checkModifierAndAnnotation(controllerClass);
         checkActionParams(controllerClass);
+        if (controllerClasses.contains(controllerClass)) {
+            throw new IllegalArgumentException();
+        }
         parseControllerAction(controllerClass);
         controllerClasses.add(controllerClass);
     }
