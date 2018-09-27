@@ -6,10 +6,17 @@ public class RelifeAction {
 
     private String path;
     private RelifeMethod method;
+    private RelifeAppHandler relifeAppHandler;
 
     public RelifeAction(String path, RelifeMethod method) {
         this.path = path;
         this.method = method;
+    }
+
+    public RelifeAction(String path, RelifeMethod method, RelifeAppHandler relifeAppHandler) {
+        this.path = path;
+        this.method = method;
+        this.relifeAppHandler = relifeAppHandler;
     }
 
     public String getPath() {
@@ -18,6 +25,10 @@ public class RelifeAction {
 
     public RelifeMethod getMethod() {
         return method;
+    }
+
+    public RelifeAppHandler getRelifeAppHandler() {
+        return relifeAppHandler;
     }
 
     @Override

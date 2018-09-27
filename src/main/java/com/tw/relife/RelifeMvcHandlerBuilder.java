@@ -2,38 +2,22 @@ package com.tw.relife;
 
 public class RelifeMvcHandlerBuilder {
 
-    private String path;
-    private RelifeMethod method;
-    private RelifeAppHandler relifeAppHandler;
+    private RelifeAppHandlerImpl relifeAppHandlerImpl;
 
     public RelifeMvcHandlerBuilder() {
-
-    }
-    public RelifeMvcHandlerBuilder(String path, RelifeMethod method, RelifeAppHandler relifeAppHandler) {
-        this.path = path;
-        this.method = method;
-        this.relifeAppHandler = relifeAppHandler;
+        this.relifeAppHandlerImpl = new RelifeAppHandlerImpl();
     }
 
     public RelifeMvcHandlerBuilder addAction(String path, RelifeMethod method, RelifeAppHandler relifeAppHandler) {
         if (path == null || method == null || relifeAppHandler == null) {
             throw new IllegalArgumentException();
         }
-        return new RelifeMvcHandlerBuilder(path, method, relifeAppHandler);
+        relifeAppHandlerImpl.addAction(new RelifeAction(path, method, relifeAppHandler));
+        return this;
     }
 
     public RelifeAppHandler build() {
-        return new RelifeAppHandlerStatus() {
-            @Override
-            public RelifeAction getAction() {
-                return new RelifeAction(path, method);
-            }
-
-            @Override
-            public RelifeResponse process(RelifeRequest request) {
-                return relifeAppHandler.process(request);
-            }
-        };
+        return relifeAppHandlerImpl;
     }
 
 

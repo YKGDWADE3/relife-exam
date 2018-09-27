@@ -1,6 +1,6 @@
 package com.tw.relife;
 
-import com.tw.relife.exception.SampleNotFoundException;
+import com.tw.relife.exception.MethodNotAllowedException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -114,13 +114,13 @@ public class RelifeAppStep3Test {
                         "/any/path",
                         RelifeMethod.GET,
                         request -> {
-                            throw new SampleNotFoundException();
+                            throw new MethodNotAllowedException();
                         })
                 .build();
 
         RelifeApp app = new RelifeApp(handler);
         RelifeRequest whateverRequest = new RelifeRequest("/any/path", RelifeMethod.GET);
         RelifeResponse response = app.process(whateverRequest);
-        assertEquals(404, response.getStatus());
+        assertEquals(403, response.getStatus());
     }
 }

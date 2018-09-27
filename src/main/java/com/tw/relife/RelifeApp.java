@@ -16,15 +16,7 @@ public class RelifeApp implements RelifeAppHandler {
     public RelifeResponse process(RelifeRequest request) {
         RelifeResponse response;
         try {
-            if (handler instanceof RelifeAppHandlerStatus) {
-                if (!((RelifeAppHandlerStatus) handler).getAction().equals(new RelifeAction(request.getPath(), request.getMethod()))) {
-                    return new RelifeResponse(404);
-                }
-            }
             response = handler.process(request);
-            if (response == null) {
-                response = new RelifeResponse(200);
-            }
         }catch (RuntimeException ex){
             RelifeStatusCode declaredAnnotation = ex.getClass().getDeclaredAnnotation(STATUS_CODE_CLASS);
             response = declaredAnnotation == null ? new RelifeResponse(500) : new RelifeResponse(declaredAnnotation.value());
