@@ -1,5 +1,7 @@
 package com.tw.relife;
 
+import com.tw.relife.annonation.RelifeStatusCode;
+
 public class RelifeApp implements RelifeAppHandler {
     public static final Class<RelifeStatusCode> STATUS_CODE_CLASS = RelifeStatusCode.class;
     private final RelifeAppHandler handler;

@@ -12,7 +12,12 @@ public class RelifeMvcHandlerBuilder {
         if (path == null || method == null || relifeAppHandler == null) {
             throw new IllegalArgumentException();
         }
-        relifeAppHandlerImpl.addAction(new RelifeAction(path, method, relifeAppHandler));
+        relifeAppHandlerImpl.addAction(new RelifeAction(path, method), relifeAppHandler);
+        return this;
+    }
+
+    public RelifeMvcHandlerBuilder addController(Class<?> controllerClass) {
+        relifeAppHandlerImpl.addController(controllerClass);
         return this;
     }
 
